@@ -1,0 +1,422 @@
+/* ═══════════════════════════════════════════════════════════════════
+   HERO — Stacked Vertical Parallax Curtain Wipe System
+   No heavy 3D transforms or expensive CSS filters (no lag!).
+   Buttery smooth 60fps scroll reveal.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Wrapper & Sticky ── */
+.kingdoms-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.kingdoms-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #020202;
+}
+
+/* ── Panel viewport ── */
+.tunnel-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Stacked Panels ── */
+.kingdom-panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  will-change: transform;
+  transform: translateY(100%); /* Stacked off-screen by default */
+}
+
+.kingdom-panel.is-first {
+  transform: translateY(0); /* First panel is active on load */
+}
+
+/* Background image with parallax headroom */
+.kingdom-panel-bg {
+  position: absolute;
+  top: -15%;
+  left: 0;
+  width: 100%;
+  height: 130%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  will-change: transform;
+}
+
+/* CSS gradient for kingdoms without images (e.g. Dorne) */
+.kingdom-panel-bg.gradient {
+  background: var(--panel-bg, #0b0500);
+}
+
+/* ── Overlay layers to blend each panel ── */
+.kingdom-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.2) 100%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 40%);
+  z-index: 1;
+}
+
+.kingdom-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 45%, rgba(0,0,0,0.5) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.kingdom-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+/* ── Corner ornaments ── */
+.k-corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  z-index: 20;
+  pointer-events: none;
+}
+.k-corner svg { width: 100%; height: 100%; }
+.k-corner-tl { top: 24px; left: 24px; }
+.k-corner-tr { top: 24px; right: 24px; transform: scaleX(-1); }
+.k-corner-bl { bottom: 52px; left: 24px; transform: scaleY(-1); }
+.k-corner-br { bottom: 52px; right: 24px; transform: scale(-1); }
+
+/* ── UI overlay ── */
+.kingdoms-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(32px, 6vw, 80px);
+}
+
+/* Huge background numeral */
+.k-bg-num {
+  position: absolute;
+  bottom: 40px;
+  right: clamp(60px, 8vw, 120px);
+  font-family: 'Cinzel', serif;
+  font-size: clamp(120px, 20vw, 260px);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(201, 168, 76, 0.05);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 4;
+}
+
+/* ── Main content area ── */
+.k-content {
+  pointer-events: auto;
+  max-width: clamp(340px, 50vw, 620px);
+  position: relative;
+  z-index: 35;
+}
+
+.k-counter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.k-counter-num {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--k-accent, #c9a84c);
+}
+.k-counter-line {
+  width: 40px;
+  height: 1px;
+  background: var(--k-accent, #c9a84c);
+  opacity: 0.4;
+}
+
+.k-region {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(9px, 1vw, 11px);
+  letter-spacing: 0.45em;
+  color: var(--k-accent, #c9a84c);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.k-house-name {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(38px, 6vw, 80px);
+  font-weight: 900;
+  color: #e5c276; /* Premium gold */
+  line-height: 1.0;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+  text-shadow: 0 4px 12px rgba(0,0,0,1), 0 2px 24px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.6); /* Clean, visible shadow */
+}
+
+.k-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.k-div-line {
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(to right, var(--k-accent, #c9a84c), transparent);
+}
+.k-div-diamond {
+  width: 6px;
+  height: 6px;
+  background: var(--k-accent, #c9a84c);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.k-words {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(17px, 2.2vw, 26px);
+  color: #e5c276; /* Premium gold for all house words */
+  font-style: italic;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: block;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+}
+
+.k-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(14px, 1.5vw, 17px);
+  line-height: 1.8;
+  color: #d4c5a0; /* Lighter, clearer gold-tinted white */
+  max-width: 480px;
+  margin-bottom: 36px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+}
+
+/* Buttons */
+.k-cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.k-btn-solid {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #020202;
+  background: var(--k-accent, #c9a84c);
+  border: none;
+  padding: 14px 32px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s var(--ease-out);
+  display: inline-block;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+.k-btn-solid:hover {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+  color: #020202;
+}
+.k-btn-ghost {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--k-accent, #c9a84c);
+  background: transparent;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  padding: 13px 28px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s var(--ease-out);
+  display: inline-block;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+.k-btn-ghost:hover {
+  border-color: var(--k-accent, #c9a84c);
+  background: rgba(201, 168, 76, 0.05);
+  transform: translateY(-2px);
+}
+
+/* ── Right side progress label ── */
+.k-right-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  pointer-events: none;
+  z-index: 35;
+}
+.k-chapter-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(201, 168, 76, 0.4);
+  writing-mode: vertical-rl;
+}
+.k-vert-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(201,168,76,0.4), transparent);
+}
+.k-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+.k-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.25);
+  transition: background 0.4s, transform 0.4s, height 0.4s;
+}
+.k-dot.active {
+  background: var(--k-accent, #c9a84c);
+  transform: scaleX(1.5);
+  height: 12px;
+  border-radius: 2px;
+}
+
+/* ── Progress bar ── */
+.k-progress-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(201,168,76,0.08);
+  z-index: 40;
+}
+.k-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, rgba(201,168,76,0.3), var(--k-accent, #c9a84c));
+  box-shadow: 0 0 8px var(--k-accent, #c9a84c);
+  transition: width 0.1s linear;
+}
+
+/* ── Scroll hint ── */
+.k-scroll-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.5;
+  animation: k-hint-pulse 2.5s ease-in-out infinite;
+}
+.k-scroll-hint span {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.45em;
+  color: #c9a84c;
+  text-transform: uppercase;
+}
+.k-scroll-arrow {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, #c9a84c, transparent);
+  animation: k-arrow-drop 2.5s ease-in-out infinite;
+}
+
+@keyframes k-hint-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
+}
+@keyframes k-arrow-drop {
+  0% { transform: translateY(-6px); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(6px); opacity: 0; }
+}
+
+/* ── Loading Overlay ── */
+.k-loading {
+  position: fixed;
+  inset: 0;
+  background: #020202;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+.k-loading.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.k-loading-logo {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(20px, 3vw, 28px);
+  color: #c9a84c;
+  letter-spacing: 0.25em;
+  text-align: center;
+}
+.k-loading-sub {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.55em;
+  color: rgba(201,168,76,0.4);
+  text-transform: uppercase;
+}
+.k-loading-bar-wrap {
+  width: 200px;
+  height: 1px;
+  background: rgba(201,168,76,0.12);
+  position: relative;
+  overflow: hidden;
+}
+.k-loading-bar-fill {
+  position: absolute;
+  inset: 0 100% 0 0;
+  background: #c9a84c;
+  animation: k-load 1.2s ease forwards;
+}
+@keyframes k-load {
+  to { right: 0; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .kingdoms-ui { padding: 0 24px; }
+  .k-content { max-width: 100%; }
+  .k-bg-num { display: none; }
+  .k-right-panel { display: none; }
+  .k-desc { display: none; }
+  .k-corner { display: none; }
+}

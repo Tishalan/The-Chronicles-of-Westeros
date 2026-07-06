@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game of Thrones — The Chronicles of Westeros</title>
+  <meta name="description" content="Explore the Seven Kingdoms of Westeros. Legendary characters, fearsome dragons, and the great houses of Game of Thrones." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Crimson+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/css/global.css" />
+  <link rel="stylesheet" href="/src/css/navbar.css" />
+  <link rel="stylesheet" href="/src/css/hero.css" />
+  <link rel="stylesheet" href="/src/css/houses.css" />
+</head>
+<body>
+
+
+
+  <!-- ═══ FIXED NAVBAR ═══ -->
+  <nav class="got-navbar" id="navbar">
+    <a href="/" class="nav-logo">Game of Thrones</a>
+    <ul class="nav-links">
+      <li><a href="/" class="active">The World</a></li>
+      <li><a href="/characters.html">Characters</a></li>
+      <li><a href="/houses.html">Houses</a></li>
+      <li><a href="/dragons.html">Dragons</a></li>
+      <li><a href="/history.html">History</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+  <div class="nav-mobile-overlay" id="mobileMenu">
+    <a href="/" class="active">The World</a>
+    <a href="/characters.html">Characters</a>
+    <a href="/houses.html">Houses</a>
+    <a href="/dragons.html">Dragons</a>
+    <a href="/history.html">History</a>
+  </div>
+
+  <!-- ═══ 7 KINGDOMS SCROLL HERO ═══ -->
+  <div class="kingdoms-wrapper" id="kingdomsWrapper">
+    <div class="kingdoms-sticky" id="kingdomsSticky">
+
+      <!-- ── 7 Image Panels (injected by JS) ── -->
+      <div id="kingdomsPanels"></div>
+
+      <!-- ── Grain + Vignette (always on top of panels) ── -->
+      <div class="kingdom-vignette"></div>
+      <div class="kingdom-grain"></div>
+
+      <!-- ── Corner ornaments ── -->
+      <div class="k-corner k-corner-tl">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M2 2L2 20M2 2L20 2" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.5"/><path d="M2 2L8 8" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.4"/><rect x="1" y="1" width="4" height="4" fill="none" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.6"/></svg>
+      </div>
+      <div class="k-corner k-corner-tr">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M2 2L2 20M2 2L20 2" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.5"/><path d="M2 2L8 8" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.4"/><rect x="1" y="1" width="4" height="4" fill="none" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.6"/></svg>
+      </div>
+      <div class="k-corner k-corner-bl">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M2 2L2 20M2 2L20 2" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.5"/><path d="M2 2L8 8" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.4"/><rect x="1" y="1" width="4" height="4" fill="none" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.6"/></svg>
+      </div>
+      <div class="k-corner k-corner-br">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M2 2L2 20M2 2L20 2" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.5"/><path d="M2 2L8 8" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.4"/><rect x="1" y="1" width="4" height="4" fill="none" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.6"/></svg>
+      </div>
+
+      <!-- ── Rune bar ── -->
+      <div class="k-rune-bar" id="kRuneBar"></div>
+
+      <!-- ── Main UI (content + right panel) ── -->
+      <div class="kingdoms-ui">
+
+        <!-- Left: Kingdom content -->
+        <div class="k-content" id="kContent">
+          <div class="k-counter">
+            <span class="k-counter-num" id="kCounterNum">01 / 07</span>
+            <span class="k-counter-line"></span>
+          </div>
+          <span class="k-region" id="kRegion">THE NORTH</span>
+          <h1 class="k-house-name" id="kHouseName">WINTERFELL</h1>
+          <div class="k-divider">
+            <span class="k-div-line"></span>
+            <span class="k-div-diamond"></span>
+          </div>
+          <span class="k-words" id="kWords">Kingdom of the North</span>
+          <p class="k-desc" id="kDesc">The ancient capital of the Kings of Winter. Winterfell is a massive stone fortress constructed by Bran the Builder, standing resilient against the freezing winds and the horrors of the wild beyond the Neck.</p>
+          <div class="k-cta" id="kCta">
+            <a href="/characters.html" class="k-btn-solid" id="kBtnSolid">Explore Winterfell</a>
+            <a href="/houses.html" class="k-btn-ghost">Explore Houses</a>
+          </div>
+        </div>
+
+        <!-- Big background number -->
+        <div class="k-bg-num" id="kBgNum">01</div>
+
+        <!-- Right: Progress dots -->
+        <div class="k-right-panel">
+          <div class="k-chapter-label" id="kChapterLabel">01 / 07</div>
+          <div class="k-vert-line"></div>
+          <div class="k-dots" id="kDots"></div>
+        </div>
+      </div>
+
+      <!-- ── Scroll hint ── -->
+      <div class="k-scroll-hint">
+        <span>Scroll</span>
+        <div class="k-scroll-arrow"></div>
+      </div>
+
+      <!-- ── Progress bar ── -->
+      <div class="k-progress-wrap">
+        <div class="k-progress-fill" id="kProgressFill"></div>
+      </div>
+
+    </div><!-- /sticky -->
+  </div><!-- /wrapper -->
+
+
+  <!-- ═══ HOUSES PREVIEW ═══ -->
+  <section class="houses-section" id="housesSection">
+    <div class="section-bg-texture"></div>
+    <div class="section-bg-vignette"></div>
+    <header class="houses-header">
+      <p class="section-eyebrow fade-up">THE GREAT HOUSES OF WESTEROS</p>
+      <div class="ornament">
+        <span class="ornament-line"></span>
+        <span class="ornament-rune">✦</span>
+        <span class="ornament-line"></span>
+      </div>
+      <h2 class="section-title fade-up">The Noble <em>Houses</em></h2>
+      <p class="section-subtitle fade-up">Seven kingdoms. Six great houses. One Iron Throne.</p>
+    </header>
+    <div class="houses-grid" id="housesGrid"></div>
+    <div class="houses-cta fade-up">
+      <a href="/houses.html" class="btn-gold">View All Houses</a>
+    </div>
+    <div class="ornament" style="margin-top:60px">
+      <span class="ornament-line"></span>
+      <span class="ornament-rune">⚔</span>
+      <span class="ornament-line"></span>
+    </div>
+  </section>
+
+  <!-- ═══ CHARACTERS PREVIEW ═══ -->
+  <section class="preview-section" id="charsPreview">
+    <div class="section-bg-texture"></div>
+    <header class="preview-header">
+      <p class="section-eyebrow fade-up">THE PEOPLE OF WESTEROS</p>
+      <div class="ornament">
+        <span class="ornament-line"></span>
+        <span class="ornament-rune">♔</span>
+        <span class="ornament-line"></span>
+      </div>
+      <h2 class="section-title fade-up">Legendary <em>Characters</em></h2>
+      <p class="section-subtitle fade-up">Kings, warriors, schemers, and survivors who shaped the realm.</p>
+    </header>
+    <div class="preview-cards" id="charsCards"></div>
+    <div class="houses-cta fade-up"><a href="/characters.html" class="btn-gold">Meet All Characters</a></div>
+  </section>
+
+  <!-- ═══ DRAGONS PREVIEW ═══ -->
+  <section class="preview-section dragons-preview" id="dragonsPreview">
+    <div class="section-bg-texture"></div>
+    <header class="preview-header">
+      <p class="section-eyebrow fade-up">FIRE MADE FLESH</p>
+      <div class="ornament">
+        <span class="ornament-line"></span>
+        <span class="ornament-rune">🐉</span>
+        <span class="ornament-line"></span>
+      </div>
+      <h2 class="section-title fade-up">The <em>Dragons</em></h2>
+      <p class="section-subtitle fade-up">Nuclear weapons of the medieval world. Beasts that forged and destroyed empires.</p>
+    </header>
+    <div class="preview-cards" id="dragonsCards"></div>
+    <div class="houses-cta fade-up"><a href="/dragons.html" class="btn-gold">All Dragons</a></div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="got-footer">
+    <div class="footer-ornament">
+      <span class="line"></span><span class="sigil">⚔</span><span class="line"></span>
+    </div>
+    <div class="footer-logo">GAME OF THRONES</div>
+    <ul class="footer-links">
+      <li><a href="/">The World</a></li>
+      <li><a href="/characters.html">Characters</a></li>
+      <li><a href="/houses.html">Houses</a></li>
+      <li><a href="/dragons.html">Dragons</a></li>
+      <li><a href="/history.html">History</a></li>
+    </ul>
+    <p class="footer-quote">"When you play the game of thrones, you win or you die."</p>
+    <p class="footer-copy">© The Chronicles of Westeros — A Fan Tribute</p>
+  </footer>
+
+  <script type="module" src="/src/js/home.js"></script>
+</body>
+</html>
